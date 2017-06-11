@@ -144,12 +144,12 @@ relevanceFilt = function(json,channel) {
                 if (uniqueText[j] == locWords[k]) {
                     locScore = locScore + 1;
                 }
-                for (var k = 0; k < hashWords.length; k++) {
+            }
+            for (var k = 0; k < hashWords.length; k++) {
                     if (uniqueHash[j] == hashWords[k]) {
                         sightScore = sightScore + 0.5;
                     }
                 }
-            }
         }
         
         //analyze hashtags
