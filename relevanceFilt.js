@@ -49,6 +49,7 @@ relevanceFilt = function(json,channel) {
     var timeWords2 = ["recently", "lately", "today"];
     var timeWords3 = ["yesterday", "week", "hour", "ago"];
     var locWords = ["there", "near", "here", "where", "on", "in", "nearby", "at", "close"];
+    var hashWords = ["monitor", "wildlife", "habitat", "nature", "environment", "conservation"];
     var sightVal, locVal, timeVal;
     var scoreThresh = 1; //change as needed
     var locThresh = 1; //change as needed
@@ -142,6 +143,11 @@ relevanceFilt = function(json,channel) {
             for (var k = 0; k < locWords.length; k++) {
                 if (uniqueText[j] == locWords[k]) {
                     locScore = locScore + 1;
+                }
+                for (var k = 0; k < hashWords.length; k++) {
+                    if (uniqueHash[j] == hashWords[k]) {
+                        sightScore = sightScore + 0.5;
+                    }
                 }
             }
         }
