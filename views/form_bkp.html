@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+		
+		<style>
+			html, body {height: 100%;}
+			.test{background:yellow;}
+			.test1{background:green;}
+			.no-left-padding{padding-left:0px;}
+			.no-left-margin{margin-left:0px;}
+			.map-div{height:80%; width:100%;}
+			.map-container{height:500px;}
+			.map-info-container{ padding: 250px 0; border: 3px solid green; border-radius: 25px; text-align: center;}
+ }
+			
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-6">
+					<form class="form-group" id="publish" action="" method="post" enctype="application/json">
+						<h2>Submit an animal sighting!</h2>
+						<label for="text">Sighting Information</label>
+						<input type="text" id="text" name="text" class="form-control" placeholder="I saw some rabbits across the street." required autofocus>
+						<br/>
+						<label for="tags">Tags</label>
+						<input type="text" id="tags" name="tags" class="form-control" placeholder="rabbit, rabbits, cute" >
+						<br/>
+						<label for="inputLocation">Location</label>
+						<div class="row">
+							<div class="col-sm-9">
+								<input type="text" id="coords" name="coords" class="form-control" placeholder="33.7000,-117.8000" required>
+							</div>
+							<div class="col-sm-3 no-left-padding">
+								<button class="btn btn-md btn-primary btn-block" type="button" onclick="getLocation()">Get My Location</button>
+							</div>
+						</div>
+						<input type="hidden" id="current_coords" name="current_coords" class="form-control">
+						<br/>
+						<label for="time">Time</label>
+						<div class="row">
+							<div class="col-sm-9">
+								<input type="text" id="time" name="time" class="form-control " placeholder="Sat Jun 03 2017 23:48:36 GMT-0700 (Pacific Daylight Time)" required>
+							</div>
+							<div class="col-sm-3 no-left-padding">
+								<button class="btn btn-md btn-primary btn-block" type="button" onclick="getTime()">Get My Time</button>
+							</div>
+						</div>
+							
+						<input type="hidden" id="current_time" name="current_time" class="form-control">
+						<br/>						
+						<!--
+						<label for="inputfile">File input</label>
+						<input type="file" name="fileinput" class="form-control-file" id="inputfile" aria-describedby="fileHelp">
+						<small id="fileHelp" class="form-text text-muted">Upload an image for context.</small>
+						-->
+						
+						<input class="btn btn-lg btn-primary btn-block" id="form-submit" type="button" onclick="formSubmit()" value="Submit"/>
+					</form>
+					<br/>
+					<br/>
+					<button class="btn btn-lg btn-info btn-block" type="button" onclick="">Track Animals</button>
+
+				</div>
+				<div class="col-md-3">
+				</div>
+			</div>	
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.6.0/socket.io.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+		<script>
+
+			getCurrentLoc();
+			
+			
+			function formSubmit(){
+				
+				
+				// console.log(channel);
+
+				getCurrentTime();
+				// setSockets();
+				document.getElementById("publish").submit();
+				
+
+			}
+
+			var coord = document.getElementById("coords");
+			var time = document.getElementById("time");
+			var lon;
+			var lat;
+			var temp;
+			var current_coords = document.getElementById("current_coords");
+			var current_time = document.getElementById("current_time");
+			var current_lon;
+			var current_lat;
+			var channel = document.getElementById("tags");
+
+			function setSockets() {
+				var socket = io();
+				socket.emit('subscribe', channel.value);
+				console.log(channel.value);
+		        socket.on('message', function (message){
+		            console.log('Inside Message received on client side: ' + message);
+		        });
+
+			}
+			
+			//get current location; used when user presses button
+			function getLocation() {
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(showPosition);
+				} else { 
+					//err.innerHTML = "Geolocation is not supported by this browser.";
+				}
+				
+				function showPosition(position) {
+					lon = position.coords.longitude;
+					lat = position.coords.latitude;
+					coord.value = lon + ',' + lat;
+					//current_coords.value = lon + ',' + lat;
+				}
+			}
+
+			//get the current time; used when user presses button
+			function getTime() {
+				time.value = Date();
+			}
+			
+			//when the user presses submit, it will record the current time and coordinates
+			//for use when filtering time and location
+			function getCurrentLoc() {			
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(geoSuccess, geoFail);
+
+				} else { 
+					//err.innerHTML = "Geolocation is not supported by this browser.";
+				}
+				
+				function geoSuccess(pos) {
+					current_lon = pos.coords.longitude;
+					current_lat = pos.coords.latitude;
+					current_coords.value = current_lon + ',' + current_lat;
+					//alert(current_lon + "/" + current_lat + " success");    
+				}
+				function geoFail(pos) {
+					alert(current_lon + "/" + current_lat + " fail");    
+				}
+			}
+			
+			function getCurrentTime() {
+				current_time.value = Date();
+			}
+
+		</script>
+	</body>
+
+</html>
