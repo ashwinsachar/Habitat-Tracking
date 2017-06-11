@@ -44,8 +44,7 @@ relevanceFilt = function(json,channel) {
     var locScore = 0;
     var timeScore = 0;
     var sightWords = ["see", "saw", "watch", "look", "notice", "observe", "spot", "witness"];
-    var objWords = ["movie", "film", "tv", "television", "book", "sticker", "flyer","art","illustration","drawing"
-    "painting"];
+    var objWords = ["movie", "film", "tv", "television", "book", "sticker", "flyer","art","illustration","drawing","painting"];
     var timeWords1 = ["just", "now"];
     var timeWords2 = ["recently", "lately", "today"];
     var timeWords3 = ["yesterday", "week", "hour", "ago"];
