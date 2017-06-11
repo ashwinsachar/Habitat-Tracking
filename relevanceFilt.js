@@ -239,7 +239,9 @@ relevanceFilt = function(json,channel) {
             timeVal = "LOW";
         }
         
-        pub = {channel:channel, sighting:sightVal, location:locVal, time:timeVal};
+        var reported_time = json[i].created_at;
+		
+        pub = {channel:channel, sighting:sightVal, coordiantes:location1, location:locVal, time_seen:reported_time, time:timeVal};
         relevance.push(pub);
     }
     
