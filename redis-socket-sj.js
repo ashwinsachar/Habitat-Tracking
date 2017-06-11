@@ -230,42 +230,116 @@ io.on('connection', function(socketconnection){
 		socketconnection.connected_channels[channel_name] = global_channels[channel_name];
 	 
 	 });
+	 
+	
 	
 
 	socketconnection.on('message', function (data){
- 		var score = relevanceFilt([formToJSON(data)],data.tags);
+
+		var text = data.text.toLowerCase();
+		var channel_name = "";
+		var channel_list = [];
+		var animal_list = ["rabbit", "rabbits", 
+							"squirrel", "squirrels",
+							"raccoon", "raccoons",
+							"bird", "birds",
+							"wolf", "wolves",
+							"lion", "lions",
+							"fox", "foxes",
+							"dog", "dogs",
+							"cat", "cats",
+							"mouse", "mice"];
+							
+		var birds_list = ["bird", "birds", "parrot", "hummingbird", "penguin", "owl", "crane", "cuckoo", "toucan", "sparrow", "kingfisher", "heron", "passerine", "stork", "swallow", "woodpecker", "albatross", "gull", "moa", "potoo", "bulbul", "hornbill", "goose", "geese", "falcon", "rhea", "plover", "tern", "sandpiper", "fregatidae", "cormorant", "swift", "kiwi", "fowl", "grouse", "auk", "spoonbill", "woodpecker", "finch", "owl", "robin", "dove", "pigeon", "crow", "starling", "blue jay", "warbler", "chickadee", "cardinal", "gull"];
+
+		var dogs_list = ["dog", "dogs", "doggie", "puppy", "doggy", "husky", "pug", "labrador", "beagle", "german shepherd", "rottweiler", "pit bull", "poodle", "shih tzu", "doberman", "boxer", "chow chow", "chihuahua", "great dane", "terrier", "dachshund", "maltese", "pomeranian", "mastiff", "st. bernard", "greyhound", "malamute", "spaniel", "golden retriever", "bulldog", "shiba inu", "corgi"];
+		
+		var cats_list = ["cat", "cats", "kitty", "kitten"];
+
+		// for(var i = 0; i < animal_list.length; i++){
+			// if(text.includes(animal_list[i])){
+								
+				if(text.search("rabbit") != -1|| text.search("rabbits") != -1){
+					channel_list.push("rabbit");
+				}
+				if (text.search("squirrel") != -1|| text.search("squirrels") != -1){
+					channel_list.push("squirrel");
+				}
+				if (text.search("raccoon") != -1|| text.search("raccoons") != -1){
+					channel_list.push("raccoon");
+				}
+				if (hasAnimal(birds_list, text)){
+					channel_list.push("bird");
+				}
+				if (text.search("wolf") != -1|| text.search("wolves") != -1){
+					channel_list.push("wolf");
+				}
+				if (text.search("fox") != -1|| text.search("foxes") != -1){
+					channel_list.push("fox");
+				}
+				if (hasAnimal(dogs_list, text)){
+					channel_list.push("dog");
+				}
+				if (hasAnimal(cats_list, text)){
+					channel_list.push("cat");
+				}
+				if (text.search("mouse") != -1|| text.search("mice") != -1){
+					channel_list.push("mouse");
+				}
+			// }
+		// }
+		
+		var score;
+		var coordinates = data.coords;;
+		
  		// console.log('Json data:  '+ JSON.stringify(formToJSON(data)));
-		var coordinates = data.coords;
-	 	console.log('Score of data: ' + JSON.stringify(score));
- 		var channel_name = data.tags;
- 		if(Object.keys(global_channels[channel_name].listeners).length > 0){
- 			Object.keys(global_channels[channel_name].listeners).forEach(function(key){
- 				// console.log(global_channels[channel_name].listeners[key].id);
- 				if(global_channels[channel_name].listeners[key].id != socketconnection.id){
- 					// console.log('Inside Message received at the server end from: ' + socketconnection.id);
-					console.log(score[0]['channel']);
-					// console.log(channel_name);
-					if(score[0]['sighting'] == 'HIGH' && score[0]['location'] == 'LOW' && score[0]['time'] == 'LOW'){
-						global_channels[channel_name].listeners[key].send(coordinates);
-					}
- 					
- 				}
- 				
- 		});
-        
- 		}
- 		else{
- 			console.log('List global channels is empty: Length is -' + Object.keys(global_channels).length);
- 		}
+ 		// var channel_name = data.tags;
+
+		for(var i = 0; i < channel_list.length; i++){
+			channel_name = channel_list[i];
+				
+			score = relevanceFilt([formToJSON(data)],channel_name);
+			
+			console.log('Score of data: ' + JSON.stringify(score) + "\n");
+			
+			// if(Object.keys(global_channels[channel_name].listeners).length != -1){
+				// Object.keys(global_channels[channel_name].listeners).forEach(function(key){
+					// // console.log(global_channels[channel_name].listeners[key].id);
+					// if(global_channels[channel_name].listeners[key].id != socketconnection.id){
+						// // console.log('Inside Message received at the server end from: ' + socketconnection.id);
+						// console.log(score[0]['channel']);
+						// // console.log(channel_name);
+						// if(score[0]['sighting'] == 'HIGH' && score[0]['location'] == 'LOW' && score[0]['time'] == 'LOW'){
+							// global_channels[channel_name].listeners[key].send(coordinates);
+						// }
+						
+					// }
+					
+			// });
+			
+			// }
+			// else{
+				// console.log('List global channels is empty: Length is -' + Object.keys(global_channels).length);
+			// }
+		}
  	});
 
+	function hasAnimal(animal_list, text){
+		for (var i = 0; i < animal_list.length; i++){
+			if(text.search(animal_list[i]) != -1){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	//Backup
  	// socketconnection.on('message', function (channel_name){
  	// // 	var score = relevanceFilt(json,channel_name);
 		// var coordinates = json[0]['coordinates']['coordinates'];
 	 // // 	console.log('Score of data: ' + score);
  		
- 	// 	if(Object.keys(global_channels[channel_name].listeners).length > 0){
+ 	// 	if(Object.keys(global_channels[channel_name].listeners).length != -1){
  	// 		Object.keys(global_channels[channel_name].listeners).forEach(function(key){
  	// 			// console.log(global_channels[channel_name].listeners[key].id);
  	// 			if(global_channels[channel_name].listeners[key].id != socketconnection.id){
