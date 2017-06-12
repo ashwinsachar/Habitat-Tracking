@@ -250,17 +250,27 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
     }
         
     //analyze current time and publication time
-    if (json[i].created_at == json[i].current_time) {
-        timeScore = timeScore + 1;
+    if (json[i].created_at.length == 0 && json[i].current_time == 0) {
+        timeScore = timeScore - 1;
+    } else if (json[i].created_at.length == 0 && json[i].current_time != 0) {
+        timeScore = timeScore - 0.5;
+    } else if (json[i].created_at.length != 0 && json[i].current_time != 0) {
+        timeScore = timeScore - 0.5;
     } else {
-        createTime = tokenizer.tokenize(json[i].created_at);
-        currTime = tokenizer.tokenize(json[i].current_time);
-            
-        if (currTime[0] == createTime[0]) {
-            if (currTime[1] == createTime[1]) {
-                if (currTime[2] == createTime[2]) {
-                    if (currTime[3] == createTime[3]) {
-                        match = true;
+        if (json[i].created_at == json[i].current_time) {
+            timeScore = timeScore + 1;
+        } else {
+            createTime = tokenizer.tokenize(json[i].created_at);
+            currTime = tokenizer.tokenize(json[i].current_time);
+ 
+            if (currTime[0] == createTime[0]) {
+                if (currTime[1] == createTime[1]) {
+                    if (currTime[2] == createTime[2]) {
+                        if (currTime[3] == createTime[3]) {
+                            match = true;
+                        } else {
+                            match = false;
+                        }
                     } else {
                         match = false;
                     }
@@ -270,23 +280,21 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
             } else {
                 match = false;
             }
-        } else {
-            match = false;
-        }
-            
-        if (match) {
-            currDigits = tokenizer1.tokenize(currTime[4]);
-            createDigits = tokenizer1.tokenize(createTime[4]);
-            if (Math.abs(currDigits[0]-createDigits[0]) >=0 && Math.abs(currDigits[0]-createDigits[0]) <= 1) {
-                timeScore = timeScore + 1;
-            } else if (Math.abs(currDigits[0]-createDigits[0]) > 1 && Math.abs(currDigits[0]-createDigits[0]) <= 3) {
-                timeScore = timeScore + 0.5;
-            } else {
-                timeScore = timeScore - 1;
+ 
+            if (match) {
+                currDigits = tokenizer1.tokenize(currTime[4]);
+                createDigits = tokenizer1.tokenize(createTime[4]);
+                if (Math.abs(currDigits[0]-createDigits[0]) >=0 && Math.abs(currDigits[0]-createDigits[0]) <= 1) {
+                    timeScore = timeScore + 1;
+                } else if (Math.abs(currDigits[0]-createDigits[0]) > 1 && Math.abs(currDigits[0]-createDigits[0]) <= 3) {
+                    timeScore = timeScore + 0.5;
+                } else {
+                    timeScore = timeScore - 1;
+                }
             }
         }
     }
-        
+ 
     //determine high or low according to threshold value
     if (sightScore > sightThresh) {
         sightVal = "HIGH";
@@ -303,10 +311,10 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
     } else {
         timeVal = "LOW";
     }
-        
+ 
     var reported_time = json[i].created_at;
 		
-    pub = {channel:channel, sighting:{sightVal,sightScore}, coordinates:location1, location:{locVal,locScore}, time_seen:reported_time, time:{timeVal,timeScore}};
+ pub = {channel:channel, sighting:sightVal, coordinates:location1, location:locVal, time_seen:reported_time, time:timeVal};
         relevance.push(pub);
 }
     
