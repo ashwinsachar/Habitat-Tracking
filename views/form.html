@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Submit Sightings</title>
-	
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -23,8 +21,6 @@
 			.map-div{height:80%; width:100%;}
 			.map-container{height:500px;}
 			.map-info-container{ padding: 250px 0; border: 3px solid green; border-radius: 25px; text-align: center;}
-			
-			table, th, td{border:1px solid white;}
  }
 			
 		</style>
@@ -75,13 +71,24 @@
 					</form>
 					<br/>
 					<br/>
-					<button class="btn btn-lg btn-info btn-block" type="button" onclick="">Track Animals</button>
-
+					<div class="form-group" id="channel" >
+					<h3>Enter whatever you are interested in:</h3>
+						<label for="whatever">Whatever</label>
+					    <textarea id= "channel_name" class="form-control" name="channel_name" placeholder="rabbit" rows="1" cols="70"></textarea>
+					    <button id ="subscribe" class="btn btn-lg btn-primary btn-block" type="button">Subscribe</button>
+				</div>
+				<br/>
+				<div class="form-group" id="channel" >
+					<h3>Enter whatever you are not interested in:</h3>
+						<label for="whatever">Whatever</label>
+					    <textarea id= "channel_name" class="form-control" name="channel_name" placeholder="rabbit" rows="1" cols="70"></textarea>
+					    <button id ="unsubscribe" class="btn btn-lg btn-primary btn-block" type="button">Unsubscribe</button>
+				</div>
 				</div>
 				<div class="col-md-3">
 				</div>
 				
-			</div> <!-- row -->
+				</div> <!-- row -->
 			<div class="messages">
 					<br/>
 					<br/>
@@ -116,16 +123,27 @@
      			}
 
      			
-     			socket.emit('subscribe', channel); // subscribe to channel
+     			// socket.emit('subscribe', channel); // subscribe to channel
 		        socket.emit('message', data); //send out form data to be consumed by server
 		      });
 			
+			// subscribe to channel
+			$('#subscribe').click(function(){
+				var channel = $('#channel_name').val(); 
+				socket.emit('subscribe', channel);
+			});
 			
+			// unsubscribe to channel
+			$('#unsubscribe').click(function(){
+				var channel = $('#channel_name').val(); 
+				socket.emit('unsubscribe', channel);
+			});
+
 			socket.on('message', function (data){
 		            console.log('Inside Message received on client side: ' + data);
 		            
 					
-		            var html = "<tr><td>"+  data.tags +"</td><td>"+ data.coords +"</td></tr>"
+		            var html = "<tr><td>"+  data.text +"</td><td>"+ data.coords +"</td></tr>"
 		            $('.table').append(html);
 
 		        });
