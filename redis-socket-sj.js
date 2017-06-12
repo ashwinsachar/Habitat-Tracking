@@ -55,13 +55,14 @@ var global_channels = {};
 function tagsToJSON(data){
 	var text = "";
 	var items = data.split(',');
-	for(var i = 0; i < items.length; i++){
-		text = text + "{\"text\": \"" + items[i].trim() + "\",\"indicies\":[0,0]}";
-		if(i != items.length - 1){
-			text = text + ",";
+	if(items.length > 0){
+		for(var i = 0; i < items.length; i++){
+			text = text + "{\"text\": \"" + items[i].trim() + "\",\"indicies\":[0,0]}";
+			if(i != items.length - 1){
+				text = text + ",";
+			}
 		}
 	}
-
 	return text;
 }
 

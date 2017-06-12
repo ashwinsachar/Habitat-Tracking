@@ -25,13 +25,13 @@
         // for(var i = 0; i < animal_list.length; i++){
             // if(text.includes(animal_list[i])){
                                 
-                if(text.search("rabbit") != -1|| text.search("rabbits") != -1){
+                if(text.search("rabbit") != -1){ //|| text.search("rabbits") != -1){
                     channel_list.push("rabbit");
                 }
-                if (text.search("squirrel") != -1|| text.search("squirrels") != -1){
+                if (text.search("squirrel") != -1){ //|| text.search("squirrels") != -1){
                     channel_list.push("squirrel");
                 }
-                if (text.search("raccoon") != -1|| text.search("raccoons") != -1){
+                if (text.search("raccoon") != -1){ //|| text.search("raccoons") != -1){
                     channel_list.push("raccoon");
                 }
                 if (hasAnimal(birds_list, text)){
@@ -40,7 +40,10 @@
                 if (text.search("wolf") != -1|| text.search("wolves") != -1){
                     channel_list.push("wolf");
                 }
-                if (text.search("fox") != -1|| text.search("foxes") != -1){
+                if (text.search("lion") != -1){ //|| text.search("lions") != -1){
+                    channel_list.push("lion");
+                }
+                if (text.search("fox") != -1){ //|| text.search("foxes") != -1){
                     channel_list.push("fox");
                 }
                 if (hasAnimal(dogs_list, text)){

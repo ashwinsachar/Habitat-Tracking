@@ -57,21 +57,21 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
 		var locWords = ["there", "near", "here", "where", "on", "in", "nearby", "at", "close", "by", "along"];
 		var hashWords = ["monitor", "wildlife", "habitat", "nature", "environment", "conservation", "animal", "animals",
 			"photography", "nationalparks", "nationalpark"];
-		var birds_list = ["albatross", "auk", "birdies", "blue jay", "bulbul", "cardinal", "chickadee", "cormorant", "crow",
+		var birds_list = ["albatross", "auk", "bird", "birdies", "blue jay", "bulbul", "cardinal", "chickadee", "cormorant", "crow",
 			"crane", "cuckoo", "dove", "eagle", "falcon", "finch", "fowl", "fregatidae", "flycatcher", "geese",
 			"goose", "grosbeak", "grouse", "gull", "heron", "hornbill", "hummingbird", "kingfisher", "kiwi",
 			"moa", "nighthawk", "owl", "parrot", "parula", "passerine", "penguin", "pelican", "pigeon", "plover",
 			"potoo", "rhea", "robin", "sandpiper", "serin", "shearwater", "sparrow", "spoonbill", "starling",
 			"stork", "swallow", "swift", "tern", "towhee", "toucan", "vireo", "warbler", "woodpecker", "whyday",
 			"wren"];
-		var dogs_list = ["doggie", "puppy", "doggy", "husky", "pug", "labrador", "beagle", "german shepherd",
+		var dogs_list = ["dog", "doggie", "puppy", "doggy", "husky", "pug", "labrador", "beagle", "german shepherd",
 			"rottweiler", "pit bull", "poodle", "shih tzu", "doberman", "boxer", "chow chow",
 			"chihuahua", "great dane", "terrier", "dachshund", "maltese", "pomeranian", "mastiff",
 			"st. bernard", "greyhound", "malamute", "spaniel", "golden retriever", "bulldog", "shiba inu",
 			"corgi"];
-		var cats_list = ["kitty", "kitten", "persian cat", "siamese cat", "maine coon", "ragdoll", "exotic shorthair",
-			"abyssinian cat", "sphynx cat", "american shorthair", "british shorthair", "birman",
-			"bengal cat", "burmese cat", "scottish fold", "russian blue", "norwegian forest cat",
+		var cats_list = ["cat", "kitty", "kitten", "persian cat", "siamese cat", "maine coon", "ragdoll", "exotic shorthair",
+			"abyssinian", "sphynx", "american shorthair", "british shorthair", "birman",
+			"bengal", "burmese", "scottish fold", "russian blue", "norwegian forest cat",
 			"oriental shorthair", "himalayan cat", "siberian cat", "devon rex", "manx cat"];
 		var sightVal,
 		locVal,
