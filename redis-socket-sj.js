@@ -30,8 +30,8 @@ app.use(bodyParser.urlencoded({
 
 
 
-http.listen(PORT, function(){
-  console.log('listening on *:' + PORT);
+http.listen(process.env.PORT || PORT, function(){
+  console.log('listening on *:' + process.env.PORT);
 });
 // Render Main HTML file
 app.get('/', function (req, res) {
