@@ -14,11 +14,22 @@
                             "cat", "cats",
                             "mouse", "mice"];
                             
-        var birds_list = ["bird", "birds", "parrot", "hummingbird", "penguin", "owl", "crane", "cuckoo", "toucan", "sparrow", "kingfisher", "heron", "passerine", "stork", "swallow", "woodpecker", "albatross", "gull", "moa", "potoo", "bulbul", "hornbill", "goose", "geese", "falcon", "rhea", "plover", "tern", "sandpiper", "fregatidae", "cormorant", "swift", "kiwi", "fowl", "grouse", "auk", "spoonbill", "woodpecker", "finch", "owl", "robin", "dove", "pigeon", "crow", "starling", "blue jay", "warbler", "chickadee", "cardinal", "gull"];
-
-        var dogs_list = ["dog", "dogs", "doggie", "puppy", "doggy", "husky", "pug", "labrador", "beagle", "german shepherd", "rottweiler", "pit bull", "poodle", "shih tzu", "doberman", "boxer", "chow chow", "chihuahua", "great dane", "terrier", "dachshund", "maltese", "pomeranian", "mastiff", "st. bernard", "greyhound", "malamute", "spaniel", "golden retriever", "bulldog", "shiba inu", "corgi"];
-        
-        var cats_list = ["cat", "cats", "kitty", "kitten"];
+        var birds_list = ["albatross", "auk", "bird", "birdies", "blue jay", "bulbul", "cardinal", "chickadee", "cormorant", "crow",
+			"crane", "cuckoo", "dove", "eagle", "falcon", "finch", "fowl", "fregatidae", "flycatcher", "geese",
+			"goose", "grosbeak", "grouse", "gull", "heron", "hornbill", "hummingbird", "kingfisher", "kiwi",
+			"moa", "nighthawk", "owl", "parrot", "parula", "passerine", "penguin", "pelican", "pigeon", "plover",
+			"potoo", "rhea", "robin", "sandpiper", "serin", "shearwater", "sparrow", "spoonbill", "starling",
+			"stork", "swallow", "swift", "tern", "towhee", "toucan", "vireo", "warbler", "woodpecker", "whyday",
+			"wren"];
+		var dogs_list = ["dog", "doggie", "puppy", "doggy", "husky", "pug", "labrador", "beagle", "german shepherd",
+			"rottweiler", "pit bull", "poodle", "shih tzu", "doberman", "boxer", "chow chow",
+			"chihuahua", "great dane", "terrier", "dachshund", "maltese", "pomeranian", "mastiff",
+			"st. bernard", "greyhound", "malamute", "spaniel", "golden retriever", "bulldog", "shiba inu",
+			"corgi"];
+		var cats_list = ["cat", "kitty", "kitten", "persian cat", "siamese cat", "maine coon", "ragdoll", "exotic shorthair",
+			"abyssinian cat", "sphynx cat", "american shorthair", "british shorthair", "birman",
+			"bengal cat", "burmese cat", "scottish fold", "russian blue", "norwegian forest cat",
+			"oriental shorthair", "himalayan cat", "siberian cat", "devon rex", "manx cat"];
 
         
         require('./relevanceFilt.js');

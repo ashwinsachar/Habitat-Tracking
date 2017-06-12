@@ -70,8 +70,8 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
 			"st. bernard", "greyhound", "malamute", "spaniel", "golden retriever", "bulldog", "shiba inu",
 			"corgi"];
 		var cats_list = ["cat", "kitty", "kitten", "persian cat", "siamese cat", "maine coon", "ragdoll", "exotic shorthair",
-			"abyssinian", "sphynx", "american shorthair", "british shorthair", "birman",
-			"bengal", "burmese", "scottish fold", "russian blue", "norwegian forest cat",
+			"abyssinian cat", "sphynx cat", "american shorthair", "british shorthair", "birman",
+			"bengal cat", "burmese cat", "scottish fold", "russian blue", "norwegian forest cat",
 			"oriental shorthair", "himalayan cat", "siberian cat", "devon rex", "manx cat"];
 		var sightVal,
 		locVal,
