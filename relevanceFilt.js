@@ -39,21 +39,23 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
  var sightScore = 0;
  var locScore = 0;
  var timeScore = 0;
- var sightWords = ["see", "saw", "watch", "look", "notice", "observe", "spot", "witness"];
+ var sightWords = ["see", "saw", "watch", "look", "notice", "observe", "spot", "witness","found","encounter",
+                   "seen"];
  var objWords = ["movie", "film", "tv", "television", "book", "sticker","flyer","art","illustration","drawing",
                  "painting", "piece", "sport", "acrylics","collage","watercolor"];
  var timeWords1 = ["just", "now"];
  var timeWords2 = ["recently", "lately", "today","on"];
  var timeWords3 = ["yesterday", "week", "hour", "ago"];
- var locWords = ["there", "near", "here", "where", "on", "in", "nearby", "at", "close", "by"];
+ var locWords = ["there", "near", "here", "where", "on", "in", "nearby", "at", "close", "by","along"];
  var hashWords = ["monitor", "wildlife", "habitat", "nature", "environment", "conservation","animal", "animals",
                   "photography","nationalparks", "nationalpark"];
- var birds_list = ["parrot", "hummingbird", "penguin", "owl", "crane", "cuckoo", "toucan", "sparrow",
-                   "kingfisher", "heron", "passerine", "stork", "swallow", "woodpecker", "albatross",
-                   "gull", "moa", "potoo", "bulbul", "hornbill", "goose", "geese", "falcon", "rhea", "plover",
-                   "tern", "sandpiper", "fregatidae", "cormorant", "swift", "kiwi", "fowl", "grouse", "auk",
-                   "spoonbill", "woodpecker", "finch", "robin", "dove", "pigeon", "crow", "starling","blue jay",
-                   "warbler", "chickadee", "cardinal", "serin", "towhee", "pelican", "eagle"];
+ var birds_list = ["albatross","auk","birdies","blue jay","bulbul","cardinal","chickadee","cormorant","crow",
+                   "crane","cuckoo","dove","eagle","falcon","finch","fowl","fregatidae","flycatcher","geese",
+                   "goose","grosbeak","grouse","gull","heron","hornbill","hummingbird","kingfisher","kiwi",
+                   "moa","nighthawk","owl","parrot","parula","passerine","penguin","pelican","pigeon","plover",
+                   "potoo","rhea","robin","sandpiper","serin","shearwater","sparrow","spoonbill","starling",
+                   "stork","swallow","swift","tern","towhee","toucan","vireo","warbler","woodpecker","whyday",
+                   "wren"];
  var dogs_list = ["doggie", "puppy", "doggy", "husky", "pug", "labrador", "beagle","german shepherd",
                   "rottweiler", "pit bull", "poodle", "shih tzu", "doberman", "boxer","chow chow",
                   "chihuahua", "great dane", "terrier", "dachshund", "maltese", "pomeranian","mastiff",
@@ -223,18 +225,18 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
             } else {
                 sightScore = sightScore;
             }
-        //check if hashtags include object words
-        for (var k = 0; k < objWords.length; k++) {
-            if (uniqueHash[j] == objWords[k]) {
-                sightScore = sightScore - 1;
+            //check if hashtags include object words
+            for (var k = 0; k < objWords.length; k++) {
+                if (uniqueHash[j] == objWords[k]) {
+                    sightScore = sightScore - 1;
+                }
             }
         }
+    } else {
+        sightScore = sightScore;
+        locScore = locScore;
+        timeScore = timeScore;
     }
- } else {
-    sightScore = sightScore;
-    locScore = locScore;
-    timeScore = timeScore;
- }
  
     //compute distance between current coordinates and GPS coordinates of device
     location1 = json[i].coordinates.coordinates;
