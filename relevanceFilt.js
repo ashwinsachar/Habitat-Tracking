@@ -102,7 +102,11 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
     hashtag = "";
     for (var j = 0; j < json[i].entities.hashtags.length; j++) {
         if (json[i].entities.hashtags.length == 0) {
-            hashtag = json[i].entities.hashtags[0].text;
+            if (json[i].entities.hashtags[0].text.length == 0) {
+                hashtag = "";
+            } else {
+                hashtag = json[i].entities.hashtags[0].text;
+            }
         } else if (j < json[i].entities.hashtags.length - 1) {
             hashtag = hashtag.concat(json[i].entities.hashtags[j].text + " ");
         } else {
@@ -115,7 +119,7 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
     //remove duplicate words
     var uniqueHash = hashtag.filter(function(elem,index,self) {
                                     return index == self.indexOf(elem);
-                                    })
+                                    });
         
     //analyze text
     for (var j = 0; j < uniqueText.length; j++) {
@@ -184,39 +188,40 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
     }
  
     //analyze hashtags
-    for (var j = 0; j < uniqueHash.length; j++) {
-        //check if hashtags include channel word
-        if (uniqueHash[j] == channel) {
-            sightScore = sightScore + 1;
-        }
-        //check if hashtags include certain hashtag words
-        for (var k = 0; k < hashWords.length; k++) {
-            if (uniqueHash[j] == hashWords[k]) {
-                sightScore = sightScore + 0.5;
+    if (uniqueHash.length > 0) {
+        for (var j = 0; j < uniqueHash.length; j++) {
+            //check if hashtags include channel word
+            if (uniqueHash[j] == channel) {
+                sightScore = sightScore + 1;
             }
-        }
-        //check if hashtags include animal breed name
-        if (channel == "bird") {
-            for (var k = 0; k < birds_list.length; k++) {
-                if (uniqueHash[j] == birds_list[k]) {
-                    sightScore = sightScore + 1;
+            //check if hashtags include certain hashtag words
+            for (var k = 0; k < hashWords.length; k++) {
+                if (uniqueHash[j] == hashWords[k]) {
+                    sightScore = sightScore + 0.5;
                 }
             }
-        } else if (channel == "dog") {
-            for (var k = 0; k < dogs_list.length; k++) {
-                if (uniqueHash[j] == dogs_list[k]) {
-                    sightScore = sightScore + 1;
+            //check if hashtags include animal breed name
+            if (channel == "bird") {
+                for (var k = 0; k < birds_list.length; k++) {
+                    if (uniqueHash[j] == birds_list[k]) {
+                        sightScore = sightScore + 1;
+                    }
                 }
-            }
-        } else if (channel == "cat") {
-            for (var k = 0; k < cats_list.length; k++) {
-                if (uniqueHash[j] == cats_list[k]) {
-                    sightScore = sightScore + 1;
+            } else if (channel == "dog") {
+                for (var k = 0; k < dogs_list.length; k++) {
+                    if (uniqueHash[j] == dogs_list[k]) {
+                        sightScore = sightScore + 1;
+                    }
                 }
+            } else if (channel == "cat") {
+                for (var k = 0; k < cats_list.length; k++) {
+                    if (uniqueHash[j] == cats_list[k]) {
+                        sightScore = sightScore + 1;
+                    }
+                }
+            } else {
+                sightScore = sightScore;
             }
-        } else {
-            sightScore = sightScore;
-        }
         //check if hashtags include object words
         for (var k = 0; k < objWords.length; k++) {
             if (uniqueHash[j] == objWords[k]) {
@@ -224,6 +229,11 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
             }
         }
     }
+ } else {
+    sightScore = sightScore;
+    locScore = locScore;
+    timeScore = timeScore;
+ }
  
     //compute distance between current coordinates and GPS coordinates of device
     location1 = json[i].coordinates.coordinates;
