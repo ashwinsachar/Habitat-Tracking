@@ -100,18 +100,19 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
         
     //put all hashtags into one string array
     hashtag = "";
-    for (var j = 0; j < json[i].entities.hashtags.length; j++) {
-        if (json[i].entities.hashtags.length == 0) {
-            if (json[i].entities.hashtags[0].text.length == 0) {
-                hashtag = "";
+    if (json[i].entities.hashtags.length == 0) {
+        hashtag = "";
+    } else if (json[i].entities.hashtags.length == 1) {
+        hashtag = json[i].entities.hashtags[0].text;
+    } else {
+        for (var j = 0; j < json[i].entities.hashtags.length; j++) {
+            if (j < json[i].entities.hashtags.length - 1) {
+                hashtag = hashtag.concat(json[i].entities.hashtags[j].text + " ");
             } else {
-                hashtag = json[i].entities.hashtags[0].text;
+                hashtag = hashtag.concat(json[i].entities.hashtags[j].text);
             }
-        } else if (j < json[i].entities.hashtags.length - 1) {
-            hashtag = hashtag.concat(json[i].entities.hashtags[j].text + " ");
-        } else {
-            hashtag = hashtag.concat(json[i].entities.hashtags[j].text);
         }
+
     }
     hashtag = hashtag.toLowerCase();
     //split up hashtags into each word
