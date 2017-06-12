@@ -30,6 +30,11 @@
 			<div class="row">
 				<div class="col-md-3"></div>
 				<div class="col-md-6">
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
 					<form class="form-group" id="publish" action="" method="post" enctype="application/json">
 						<h2>Submit an animal sighting!</h2>
 						<label for="text">Sighting Information</label>
@@ -43,8 +48,10 @@
 							<div class="col-sm-9">
 								<input type="text" id="coords" name="coords" class="form-control" placeholder="33.7000,-117.8000" required>
 							</div>
-							<div class="col-sm-3 no-left-padding">
-								<button class="btn btn-md btn-primary btn-block" type="button" onclick="getLocation()">Get My Location</button>
+							<div class="col-sm-3">
+								<button class="btn btn-md btn-primary btn-block" type="button" onclick="getLocation()">
+									<span class="glyphicon glyphicon-map-marker"></span>
+								</button>
 							</div>
 						</div>
 						<input type="hidden" id="current_coords" name="current_coords" class="form-control">
@@ -54,11 +61,12 @@
 							<div class="col-sm-9">
 								<input type="text" id="time" name="time" class="form-control " placeholder="Sat Jun 03 2017 23:48:36 GMT-0700 (Pacific Daylight Time)" required>
 							</div>
-							<div class="col-sm-3 no-left-padding">
-								<button class="btn btn-md btn-primary btn-block" type="button" onclick="getTime()">Get My Time</button>
+							<div class="col-sm-3">
+								<button class="btn btn-md btn-primary btn-block" type="button" onclick="getTime()">
+									<span class="glyphicon glyphicon-time"></span>								
+								</button>
 							</div>
 						</div>
-							
 						<input type="hidden" id="current_time" name="current_time" class="form-control">
 						<br/>						
 						<!--
@@ -71,34 +79,62 @@
 					</form>
 					<br/>
 					<br/>
-					<div class="form-group" id="channel" >
-					<h3>Enter whatever you are interested in:</h3>
-						<label for="whatever">Whatever</label>
-					    <textarea id= "channel_name" class="form-control" name="channel_name" placeholder="rabbit" rows="1" cols="70"></textarea>
-					    <button id ="subscribe" class="btn btn-lg btn-primary btn-block" type="button">Subscribe</button>
-				</div>
-				<br/>
-				<div class="form-group" id="channel" >
-					<h3>Enter whatever you are not interested in:</h3>
-						<label for="whatever">Whatever</label>
-					    <textarea id= "channel_name" class="form-control" name="channel_name" placeholder="rabbit" rows="1" cols="70"></textarea>
-					    <button id ="unsubscribe" class="btn btn-lg btn-primary btn-block" type="button">Unsubscribe</button>
-				</div>
+					<br/>
+					<br/>
+					<br/>
+				
 				</div>
 				<div class="col-md-3">
 				</div>
 				
-				</div> <!-- row -->
-			<div class="messages">
-					<br/>
-					<br/>
-					<table class="table" style="width:100%;">
-						<tr style="color:white;background:black;">
-							<th>Tags</th>
-							<th>Coordinates</th>
-						</tr>
-					</table>
+			</div> <!-- row -->
+		</div>
+		<div class="container">
+			<div class="row">
+				<h2>Welcome to the Wildlife Monitor!</h2>
+				<br/>
+				<div class="col-md-6">
+					<div class="form-group" id="channel" >
+						
+							<label for="sub_channel">What animal are you interested in?</label>
+							<input type="text" id= "sub_channel_name" class="form-control" name="channel_name" placeholder="rabbit">
+							<button id ="subscribe" class="btn btn-lg btn-primary btn-block" type="button">Subscribe</button>
+					</div>
 				</div>
+				<div class="col-md-6">
+					<div class="form-group" id="channel" >
+							<label for="unsub_channel">Not interested in an animal anymore?</label>
+							<input type="text" id= "unsub_channel_name" class="form-control" name="channel_name" placeholder="rabbit">
+							<button id ="unsubscribe" class="btn btn-lg btn-primary btn-block" type="button">Unsubscribe</button>
+					</div>
+				</div>
+			</div>
+			<div class="messages">
+				<br/>
+				<br/>
+				<table class="table" style="width:100%;">
+					<tr style="color:white;background:black;">
+						<th>Animal</th>
+						<th>Chance of Sighting</th>
+						<th>Location (lat,lon)</th>
+						<th>Chance of Location</th>
+						<th>Time</th>
+						<th>Chance of Time</th>
+					</tr>
+				</table>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+			</div>
 		</div>
 		<script>
 
@@ -111,7 +147,7 @@
 			$('#publish').submit(function(e){
 				e.preventDefault();
 				getCurrentTime();
-     			var channel = $('#tags').val(); //channel subscription name
+     			//var channel = $('#tags').val(); //channel subscription name
      			
      			var data = {
      				text: $('#text').val(),
@@ -129,24 +165,25 @@
 			
 			// subscribe to channel
 			$('#subscribe').click(function(){
-				var channel = $('#channel_name').val(); 
+				var channel = $('#sub_channel_name').val(); 
 				socket.emit('subscribe', channel);
 			});
 			
 			// unsubscribe to channel
 			$('#unsubscribe').click(function(){
-				var channel = $('#channel_name').val(); 
+				var channel = $('#unsub_channel_name').val(); 
 				socket.emit('unsubscribe', channel);
 			});
 
 			socket.on('message', function (data){
-		            console.log('Inside Message received on client side: ' + data);
-		            
-					
-		            var html = "<tr><td>"+  data.text +"</td><td>"+ data.coords +"</td></tr>"
-		            $('.table').append(html);
-
-		        });
+				console.log('Inside Message received on client side: ' + data);
+				
+				
+				var html = "<tr><td>" +  data[0] +"</td><td>"+ data[1] +"</td><td>"+ data[2] +"</td><td>"
+							+ data[3] +"</td><td>"+ data[4] +"</td><td>"+ data[5] +"</td></tr>";
+				
+				$('.table').append(html);
+			});
 				
 			
 
@@ -168,14 +205,13 @@
 				if (navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(showPosition);
 				} else { 
-					//err.innerHTML = "Geolocation is not supported by this browser.";
+					alert("Geolocation is not supported by this browser.");
 				}
 				
 				function showPosition(position) {
-					lon = position.coords.longitude;
 					lat = position.coords.latitude;
-					coord.value = lon + ',' + lat;
-					//current_coords.value = lon + ',' + lat;
+					lon = position.coords.longitude;
+					coord.value = lat + ',' + lon;
 				}
 			}
 
@@ -192,16 +228,18 @@
 
 				} else { 
 					//err.innerHTML = "Geolocation is not supported by this browser.";
+					alert("Geolocation is not supported by this browser.");
 				}
 				
 				function geoSuccess(pos) {
-					current_lon = pos.coords.longitude;
 					current_lat = pos.coords.latitude;
-					current_coords.value = current_lon + ',' + current_lat;
+					current_lon = pos.coords.longitude;
+					current_coords.value = current_lat + ',' + current_lon;
 					//alert(current_lon + "/" + current_lat + " success");    
 				}
 				function geoFail(pos) {
-					alert(current_lon + "/" + current_lat + " fail");    
+					//alert(current_lat + "/" + current_lon + " fail");    
+					alert("Geolocation is not supported by this browser.");
 				}
 			}
 			

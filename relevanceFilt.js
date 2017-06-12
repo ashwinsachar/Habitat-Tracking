@@ -251,7 +251,8 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
     } else {
         distanceX = 69.1*(location1[0]-location2[0]);
         distanceY = 53.0*(location1[1]-location2[1]);
-        distance = Math.sqrt(distanceX*distanceX - distanceY*distanceY);
+		distance = Math.sqrt(Math.abs(distanceX*distanceX - distanceY*distanceY));
+
         //analyze relevance according to distance
         if (distance == 0) {
             locScore = locScore + 1;
@@ -267,7 +268,7 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
         timeScore = timeScore - 1;
     } else if (json[i].created_at.length == 0 && json[i].current_time != 0) {
         timeScore = timeScore - 0.5;
-    } else if (json[i].created_at.length != 0 && json[i].current_time != 0) {
+    } else if (json[i].created_at.length != 0 && json[i].current_time == 0) {
         timeScore = timeScore - 0.5;
     } else {
         if (json[i].created_at == json[i].current_time) {
@@ -293,7 +294,6 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
             } else {
                 match = false;
             }
- 
             if (match) {
                 currDigits = tokenizer1.tokenize(currTime[4]);
                 createDigits = tokenizer1.tokenize(createTime[4]);
@@ -326,12 +326,12 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
     }
  
     var reported_time = json[i].created_at;
-		
- pub = {channel:channel, sighting:sightVal, coordinates:location1, location:locVal, time_seen:reported_time, time:timeVal};
-        relevance.push(pub);
+	
+	pub = {channel:channel, sighting:sightVal, coordinates:location1, location:locVal, time_seen:reported_time, time:timeVal};
+	relevance.push(pub);
 }
     
-return relevance;
+	return relevance;
  }
  }
- )();
+)();

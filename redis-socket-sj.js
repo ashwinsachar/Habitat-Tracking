@@ -151,14 +151,29 @@ io.on('connection', function(socketconnection){
         }
 
  		
- 		console.log("Length of score: " + score.length);
+ 		// console.log("Length of score: " + score.length);
  		// console.log('Json data:  '+ JSON.stringify(formToJSON(data)));
 		// var coordinates = data.coords;
-	 	console.log('Score of data: ' + JSON.stringify(score));
+	 	console.log('\nGenerated Scores: ');
+		
+		for(var i = 0; i < score.length; i++){
+			console.log('\t ' + JSON.stringify(score[i]));
+		}
+		
+		console.log('\nScores of Interest to the User: ');
 	 	for(var i = 0; i < score.length; i++){
  			var channel_name = score[i][0]['channel'];
- 			console.log("Channel_name: " +channel_name);
+			var chance_of_sighting = score[i][0]['sighting'];
+			var coords = score[i][0]['coordinates'];
+			var chance_of_location = score[i][0]['location'];
+			var reported_time = score[i][0]['time_seen'];
+			var chance_of_time = score[i][0]['time'];
+			var info_to_send = [channel_name, chance_of_sighting, coords, chance_of_location, reported_time, chance_of_time, info_to_send];
+
+ 			// console.log("Channel_name: " +channel_name);
 	 		if (global_channels.hasOwnProperty(channel_name)){
+				console.log('\t ' + JSON.stringify(score[i]));
+
 		 		if(Object.keys(global_channels[channel_name].listeners).length != -1){
 		 			Object.keys(global_channels[channel_name].listeners).forEach(function(key){
 		 				// console.log(global_channels[channel_name].listeners[key].id);
@@ -166,9 +181,11 @@ io.on('connection', function(socketconnection){
 		 					// console.log('Inside Message received at the server end from: ' + socketconnection.id);
 							// console.log(score[0]['channel']);
 							// console.log(channel_name);
-							if(score[i][0]['sighting'] == 'LOW' && score[i][0]['location'] == 'HIGH' && score[i][0]['time'] == 'LOW'){
-								global_channels[channel_name].listeners[key].send(data);
-							}
+							// Show/Hide tag info
+							// if(score[i][0]['sighting'] == 'LOW' && score[i][0]['location'] == 'HIGH' && score[i][0]['time'] == 'LOW'){
+								// global_channels[channel_name].listeners[key].send(data);
+								global_channels[channel_name].listeners[key].send(info_to_send);
+							// }
 		 					
 		 				}
 		 				
@@ -179,8 +196,9 @@ io.on('connection', function(socketconnection){
 		 			console.log('List global channels is empty: Length is -' + Object.keys(global_channels).length);
 		 		}
 		 	}
-	 	else{
-	 		console.log('Discarded message. Sorry, not sorry, stop posting shit no one is interested in :P');
+			else{
+	 		// console.log('Discarded message. Sorry, not sorry, stop posting shit no one is interested in :P');
+				console.log('\nUser is not subscribed to ' + channel_name + " channel.");
 	 		}
  		}
  	});
@@ -199,7 +217,7 @@ io.on('connection', function(socketconnection){
 				if (socketconnection.connected_channels.hasOwnProperty(channel_name)){
 				//If this connection is indeed subscribing to channel_name
 				//Delete this connection from the Redis Channel's listeners
-				console.log("Unsubscribed from: " +channel_name);
+				console.log("Unsubscribed from: " + channel_name);
 				delete global_channels[channel_name].listeners[socketconnection.id];
 				//Delete channel from this connection's connected_channels
 				delete socketconnection.connected_channels[channel_name];
