@@ -1,5 +1,3 @@
-
-
 /*
 //sample json
 var json = [{"text":"I just saw rabbits at the park today! The rabbits were so cute. #rabbit #rabbits",
@@ -58,7 +56,7 @@ var json = [{"text":"I just saw rabbits at the park today! The rabbits were so c
 		var hashWords = ["monitor", "wildlife", "habitat", "nature", "environment", "conservation", "animal", "animals",
 			"photography", "nationalparks", "nationalpark"];
 		var birds_list = ["albatross", "auk", "bird", "birdies", "blue jay", "bulbul", "cardinal", "chickadee", "cormorant", "crow",
-			"crane", "cuckoo", "dove", "eagle", "falcon", "finch", "fowl", "fregatidae", "flycatcher", "geese",
+			"crane", "cuckoo", "dove", "eagle", "hawk", "falcon", "finch", "fowl", "fregatidae", "flycatcher", "geese",
 			"goose", "grosbeak", "grouse", "gull", "heron", "hornbill", "hummingbird", "kingfisher", "kiwi",
 			"moa", "nighthawk", "owl", "parrot", "parula", "passerine", "penguin", "pelican", "pigeon", "plover",
 			"potoo", "rhea", "robin", "sandpiper", "serin", "shearwater", "sparrow", "spoonbill", "starling",

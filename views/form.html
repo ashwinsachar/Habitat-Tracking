@@ -91,7 +91,16 @@
 		</div>
 		<div class="container">
 			<div class="row">
-				<h2>Welcome to the Wildlife Monitor!</h2>
+				<div class="col-md-10">
+					<h2>Welcome to the Wildlife Monitor!</h2>
+				</div>
+				<div class="col-md-2">
+					<button id="simulate" class="btn btn-md btn-primary btn-block" type="button">
+						Simulation <span class="glyphicon glyphicon-comment"></span>								
+					</button>
+				</div>
+			</div>
+			<div class="row">
 				<br/>
 				<div class="col-md-6">
 					<div class="form-group" id="channel" >
@@ -155,7 +164,8 @@
      				coords : $('#coords').val(),
      				time : $('#time').val(),
      				current_time : $('#current_time').val(),
-     				current_coords : $('#current_coords').val()
+     				current_coords : $('#current_coords').val(),
+					type: "form"
      			}
 
      			
@@ -247,6 +257,84 @@
 				current_time.value = Date();
 			}
 
+			var bird_data = [{"text":"I was able to hear the White-eyed Vireo this afternoon at Talbert Regional Park.",
+                 "entities":{"hashtags":[],"urls":[],"user_mentions":[]},
+                 "coordinates":{"coordinates":[33.660762, -117.841204],"type":"Point"},
+                 "created_at":"Sun Jun 11 2017 15:30:00 GMT-0700 (Pacific Daylight Time)",
+                 "geo":null,
+                 "current_time": "Sun Jun 11 2017 13:30:00 GMT-0700 (Pacific Daylight Time)",
+                 "current_coords": [-117.75530719999999,33.6853058]},
+                 {"text":"I found a Lesser Nighthawk roosting on a low branch under the canopy of a Myoporum bush.",
+                 "entities":{"hashtags":[],"urls":[],"user_mentions":[]},
+                 "coordinates":{"coordinates":[33.660762, -117.841204],"type":"Point"},
+                 "created_at":"Sun Jun 11 2017 12:21:00 GMT-0700 (Pacific Daylight Time)",
+                 "geo":null,
+                 "current_time": "Sun Jun 11 2017 10:30:00 GMT-0700 (Pacific Daylight Time)",
+                 "current_coords": [-117.75530719999999,33.6853058]},
+                 {"text":"We encountered good numbers of Sooty Shearwaters.",
+                 "entities":{"hashtags":[],"urls":[],"user_mentions":[]},
+                 "coordinates":{"coordinates":[33.660762, -117.841204],"type":"Point"},
+                 "created_at":"Sun Jun 10 2017 12:21:00 GMT-0700 (Pacific Daylight Time)",
+                 "geo":null,
+                 "current_time": "Sun Jun 10 2017 20:27:00 GMT-0700 (Pacific Daylight Time)",
+                 "current_coords": [-117.75530719999999,33.6853058]},
+                 {"text":"I found a second-year male Rose-breasted Grosbeak on the Oso Creek Trail.",
+                 "entities":{"hashtags":[],"urls":[],"user_mentions":[]},
+                 "coordinates":{"coordinates":[33.660762, -117.841204],"type":"Point"},
+                 "created_at":"Sun Jun 11 2017 12:21:00 GMT-0700 (Pacific Daylight Time)",
+                 "geo":null,
+                 "current_time": "Sun Jun 11 2017 10:30:00 GMT-0700 (Pacific Daylight Time)",
+                 "current_coords": [-117.75530719999999,33.6853058]},
+                 {"text":"A hooded warbler was found at Canyon Park.",
+                 "entities":{"hashtags":[],"urls":[],"user_mentions":[]},
+                 "coordinates":{"coordinates":[33.660762, -117.841204],"type":"Point"},
+                 "created_at":"Sun Jun 11 2017 12:21:00 GMT-0700 (Pacific Daylight Time)",
+                 "geo":null,
+                 "current_time": "Sun Jun 11 2017 10:30:00 GMT-0700 (Pacific Daylight Time)",
+                 "current_coords": [-117.75530719999999,33.6853058]},
+                 {"text":"I saw a singing Northern Parula along the sidewalke on the west side.",
+                 "entities":{"hashtags":[],"urls":[],"user_mentions":[]},
+                 "coordinates":{"coordinates":[33.660762, -117.841204],"type":"Point"},
+                 "created_at":"Sun Jun 11 2017 12:21:00 GMT-0700 (Pacific Daylight Time)",
+                 "geo":null,
+                 "current_time": "Sun Jun 11 2017 10:30:00 GMT-0700 (Pacific Daylight Time)",
+                 "current_coords": [-117.75530719999999,33.6853058]},
+                 {"text":"I found an ovenbird at Gum Brove Park.",
+                 "entities":{"hashtags":[],"urls":[],"user_mentions":[]},
+                 "coordinates":{"coordinates":[33.660762, -117.841204],"type":"Point"},
+                 "created_at":"Sun Jun 11 2017 12:21:00 GMT-0700 (Pacific Daylight Time)",
+                 "geo":null,
+                 "current_time": "Sun Jun 11 2017 10:30:00 GMT-0700 (Pacific Daylight Time)",
+                 "current_coords": [-117.75530719999999,33.6853058]},
+                 {"text":"I saw a Canyon Wren on Lauren Canyon trail at Laguna Coast.",
+                 "entities":{"hashtags":[],"urls":[],"user_mentions":[]},
+                 "coordinates":{"coordinates":[33.660762, -117.841204],"type":"Point"},
+                 "created_at":"Sun Jun 11 2017 12:21:00 GMT-0700 (Pacific Daylight Time)",
+                 "geo":null,
+                 "current_time": "Sun Jun 11 2017 10:30:00 GMT-0700 (Pacific Daylight Time)",
+                 "current_coords": [-117.75530719999999,33.6853058]},
+                 {"text":"There was a willow flycatcher along the Tree Hill Trail.",
+                 "entities":{"hashtags":[],"urls":[],"user_mentions":[]},
+                 "coordinates":{"coordinates":[33.660762, -117.841204],"type":"Point"},
+                 "created_at":"Sun Jun 11 2017 12:21:00 GMT-0700 (Pacific Daylight Time)",
+                 "geo":null,
+                 "current_time": "Sun Jun 11 2017 10:30:00 GMT-0700 (Pacific Daylight Time)",
+                 "current_coords": [-117.75530719999999,33.6853058]},
+                 {"text":"A pin-tailed whyday was seen near south park of lake.",
+                 "entities":{"hashtags":[],"urls":[],"user_mentions":[]},
+                 "coordinates":{"coordinates":[33.660762, -117.841204],"type":"Point"},
+                 "created_at":"Sun Jun 11 2017 12:21:00 GMT-0700 (Pacific Daylight Time)",
+                 "geo":null,
+                 "current_time": "Sun Jun 11 2017 10:30:00 GMT-0700 (Pacific Daylight Time)",
+                 "current_coords": [-117.75530719999999,33.6853058]}];
+			
+			$('#simulate').click(function(){
+				for(var i = 0; i < bird_data.length; i++){
+					socket.emit('message', bird_data[i]);
+				}
+			});
+			
+				
 		</script>
 	</body>
 

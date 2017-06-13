@@ -18,11 +18,7 @@ var io = require('socket.io')(http);
 var express = require('express');
 var bodyParser = require('body-parser');
 
-// app.get('/', function(req, res){
-//   res.sendFile(__dirname + './views/form.html');
-// });
-
-// Express Middleware
+// Express 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
     extended: true
@@ -48,7 +44,7 @@ var global_channels = {};
  
 //Server Logic goes here
 
-// var json =''
+
 
 
 
@@ -136,6 +132,7 @@ io.on('connection', function(socketconnection){
 	 });
 
 	socketconnection.on('message', function (data){
+		
 		var score = [];
         
         // console.log('Json data:  '+ JSON.stringify(formToJSON(data)));
@@ -143,8 +140,13 @@ io.on('connection', function(socketconnection){
         var channel_list = channel(data);
         for(var i = 0; i < channel_list.length; i++){
             channel_name = channel_list[i];
-                
-            score.push(relevanceFilt([formToJSON(data)],channel_name));
+			// console.log(data.type);
+			if(data.type == "form"){
+				score.push(relevanceFilt([formToJSON(data)],channel_name));
+			}
+			else{
+				score.push(relevanceFilt([data],channel_name));
+			}
             
             // console.log('Score of data: ' + JSON.stringify(score) + "\n");
             
@@ -155,6 +157,8 @@ io.on('connection', function(socketconnection){
  		// console.log("Length of score: " + score.length);
  		// console.log('Json data:  '+ JSON.stringify(formToJSON(data)));
 		// var coordinates = data.coords;
+		console.log("\n---");
+		console.log("\nText: " + data.text);
 	 	console.log('\nGenerated Scores: ');
 		
 		for(var i = 0; i < score.length; i++){
@@ -173,22 +177,23 @@ io.on('connection', function(socketconnection){
 
  			// console.log("Channel_name: " +channel_name);
 	 		if (global_channels.hasOwnProperty(channel_name)){
-				console.log('\t ' + JSON.stringify(score[i]));
+				// console.log('\t ' + JSON.stringify(score[i]));
 
 		 		if(Object.keys(global_channels[channel_name].listeners).length != -1){
 		 			Object.keys(global_channels[channel_name].listeners).forEach(function(key){
+						console.log('\t ' + JSON.stringify(score[i]));
 		 				// console.log(global_channels[channel_name].listeners[key].id);
-		 				if(global_channels[channel_name].listeners[key].id != socketconnection.id){
+		 				// if(global_channels[channel_name].listeners[key].id != socketconnection.id){
 		 					// console.log('Inside Message received at the server end from: ' + socketconnection.id);
 							// console.log(score[0]['channel']);
 							// console.log(channel_name);
-							// Show/Hide tag info
+							// Filter data
 							// if(score[i][0]['sighting'] == 'LOW' && score[i][0]['location'] == 'HIGH' && score[i][0]['time'] == 'LOW'){
 								// global_channels[channel_name].listeners[key].send(data);
 								global_channels[channel_name].listeners[key].send(info_to_send);
 							// }
 		 					
-		 				}
+		 				// }
 		 				
 		 		});
 		        
@@ -199,7 +204,7 @@ io.on('connection', function(socketconnection){
 		 	}
 			else{
 	 		// console.log('Discarded message. Sorry, not sorry, stop posting shit no one is interested in :P');
-				console.log('\nUser is not subscribed to ' + channel_name + " channel.");
+				console.log('\nUser is not subscribed to ' + channel_name + " channel.\n");
 	 		}
  		}
  	});
@@ -208,14 +213,15 @@ io.on('connection', function(socketconnection){
  	
 	//Unsubscribe request from client
 	socketconnection.on('unsubscribe', function(channel_name){
-			var data = {
-				text: channel_name
-			}
-			var channel_list = channel(data);
-	        for(var i = 0; i < channel_list.length; i++){
-	            channel_name = channel_list[i];
-				// console.log('Socket id unsubscribed: ' + socketconnection.id);
-				if (socketconnection.connected_channels.hasOwnProperty(channel_name)){
+		
+		var data = {
+			text: channel_name
+		}
+		var channel_list = channel(data);
+		for(var i = 0; i < channel_list.length; i++){
+			channel_name = channel_list[i];
+			// console.log('Socket id unsubscribed: ' + socketconnection.id);
+			if (socketconnection.connected_channels.hasOwnProperty(channel_name)){
 				//If this connection is indeed subscribing to channel_name
 				//Delete this connection from the Redis Channel's listeners
 				console.log("Unsubscribed from: " + channel_name);
@@ -234,4 +240,3 @@ io.on('connection', function(socketconnection){
 			});
 		});
 });
-
