@@ -203,7 +203,6 @@ io.on('connection', function(socketconnection){
 		 		}
 		 	}
 			else{
-	 		// console.log('Discarded message. Sorry, not sorry, stop posting shit no one is interested in :P');
 				console.log('\nUser is not subscribed to ' + channel_name + " channel.\n");
 	 		}
  		}
