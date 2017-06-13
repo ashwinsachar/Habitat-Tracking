@@ -188,10 +188,10 @@ io.on('connection', function(socketconnection){
 							// console.log(score[0]['channel']);
 							// console.log(channel_name);
 							// Filter data
-							if(score[i][0]['sighting'] == 'LOW' && score[i][0]['location'] == 'HIGH' && score[i][0]['time'] == 'LOW'){
+							// if(score[i][0]['sighting'] == 'HIGH' && score[i][0]['location'] == 'HIGH' && score[i][0]['time'] == 'HIGH'){
 								// global_channels[channel_name].listeners[key].send(data);
 								global_channels[channel_name].listeners[key].send(info_to_send);
-							}
+							// }
 		 					
 		 				// }
 		 				
