@@ -117,7 +117,8 @@ io.on('connection', function(socketconnection){
 		}
 		else{
 		//Else, initialize new Redis Client as a channel and make it subscribe to channel_name
-			global_channels[channel_name] = redis.createClient('redis://' + creds.user + ':' + creds.password + '@' + creds.host + ':' + creds.port);
+
+			global_channels[channel_name] = redis.createClient(process.env.REDIS_URL);
 			global_channels[channel_name].subscribe(channel_name);
 			global_channels[channel_name].listeners = {};
 			//Add this connection to the listeners
